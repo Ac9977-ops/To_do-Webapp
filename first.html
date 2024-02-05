@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="first.css">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4 my-5 mb-2 pb-2" id="center">
+                <h1 class="my-3 text-center pb-3" id="heading">To Do List</h1>
+
+                <input type="search" id="srch" placeholder="Search Task" class="form-control" onkeypress="search()">
+                <button type="button" class="btn btn-primary my-2 mx-2">Search</button>
+                <button type="button" class="btn btn-primary my-2" data-bs-toggle="modal" data-bs-target="#Modaledit">Add Task</button>
+            </div>
+            <div class="container-fluid my-3">
+                <iframe src="if.html" onload="load()" name="first" style="width: 94rem; height: 30rem;"></iframe>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+ <!-- add modal  -->
+        <div class="modal fade" id="Modaledit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add Task</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="task" placeholder="Title">
+                                <label for="floatingInput">Title</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="saveTask() , refreshIframe();"
+                            >Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+       let refreshIframe=()=>{
+        let ifr = document.getElementsByName('first')[0];
+        ifr.src=ifr.src;
+       }
+    </script>
+    <script>  
+    function saveTask() {
+        var task = document.getElementById('task').value;
+        var tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        tasks.push(task);
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+    load=()=>{
+       let iframe = document.getElementsByTagName('iframe')[0];
+       iframe.style.background="inherit";
+       iframe.contentWindow.document.body.style.background="inherit";
+    }
+    </script>
+    </body>
+</html>
